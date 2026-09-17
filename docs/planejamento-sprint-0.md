@@ -47,7 +47,7 @@ João Felipe de Holanda é o responsável pela concepção do produto, pelas dec
 ## Entregáveis
 
 - projeto KMP compilável para Android e Desktop;
-- CI com `ktlintCheck`, `detekt`, `assembleDebug` e `jvmJar`;
+- CI com `ktlintCheck`, `detekt`, `assembleDebug` e `desktopJar`;
 - `docs/proposta.md`;
 - backlog com pelo menos cinco histórias, sendo três estimadas;
 - `docs/backlog-sprint-0.md` como fonte para criação do GitHub Project;

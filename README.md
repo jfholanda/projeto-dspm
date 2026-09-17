@@ -38,7 +38,7 @@ Pré-requisitos: JDK 17+, Android SDK para o build Android e acesso à internet 
 ./gradlew ktlintCheck
 ./gradlew detekt
 ./gradlew assembleDebug
-./gradlew jvmJar
+./gradlew desktopJar
 ```
 
 O APK de debug é gerado em `composeApp/build/outputs/apk/debug/`.
