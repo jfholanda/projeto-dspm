@@ -38,7 +38,7 @@ A Sprint 0 não implementará telas ou funcionalidades de negócio. A primeira t
 | Interface futura | Compose Multiplatform |
 | Backend futuro | Supabase |
 | Integração externa | Não prevista |
-| Coorte | Coorte B como padrão, caso ainda não definida |
+| Coorte | Coorte B — apresentação online |
 
 Android atende ao público estudantil e permite desenvolvimento e distribuição com baixo custo. Desktop acelera o ciclo de desenvolvimento. Supabase oferece autenticação, PostgreSQL e armazenamento sem exigir a implementação de uma infraestrutura própria nesta fase. Compose Multiplatform mantém a possibilidade de compartilhar a interface entre plataformas.
 
@@ -85,5 +85,6 @@ João Felipe de Holanda é o responsável pela concepção do produto, pelas dec
 - [ ] Android e Desktop declarados e configurados.
 - [ ] CI configurado.
 - [ ] Documentação revisada.
+- [ ] Coorte B registrada como coorte oficial, com apresentação online.
 - [ ] Backlog criado no GitHub Projects.
 - [ ] Vídeo gravado com a participação do integrante.

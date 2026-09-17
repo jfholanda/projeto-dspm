@@ -48,7 +48,7 @@ Equipe de uma pessoa:
 
 - **João Felipe de Holanda** — matrícula `20220038808` — concepção, produto, desenvolvimento, documentação, testes e apresentação.
 
-O trabalho será rastreado por issues e pull requests vinculados, com commits pequenos e documentação das decisões. A coorte será a B como padrão de planejamento caso ainda não tenha sido definida oficialmente.
+O trabalho será rastreado por issues e pull requests vinculados, com commits pequenos e documentação das decisões. A equipe pertence à **Coorte B**, cuja apresentação ocorre online.
 
 ## Riscos
 
