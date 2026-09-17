@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Configurar Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Verificar formatação
+        run: ./gradlew ktlintCheck
+
+      - name: Executar análise estática
+        run: ./gradlew detekt
+
+      - name: Compilar Android
+        run: ./gradlew assembleDebug
+
+      - name: Compilar Desktop
+        run: ./gradlew jvmJar
