@@ -36,6 +36,10 @@ Cadastro e login, disciplinas, biblioteca, materiais cadastrados, capítulos, le
 
 Rede social, grupos de estudo, colaboração em tempo real, marketplace, distribuição de livros protegidos, gestão de turmas, decks públicos, gamificação complexa, importação do Anki, calendário acadêmico, Google Calendar, chat genérico com IA, OCR obrigatório, geração automática obrigatória de conteúdo e upload arbitrário de PDF como requisito central.
 
+## Backlog inicial
+
+O backlog priorizado e estimado está disponível no [GitHub Projects — Revysa Sprint 0](https://github.com/users/jfholanda/projects/3/views/1?layout=board).
+
 ## Plataforma e backend
 
 O alvo prioritário será Android, por ser adequado ao público estudantil e permitir desenvolvimento e distribuição com baixo custo. Desktop será alvo secundário para acelerar o desenvolvimento e validar a interface compartilhada.
