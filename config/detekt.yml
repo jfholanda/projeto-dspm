@@ -1,0 +1,14 @@
+naming:
+  FunctionNaming:
+    ignoreAnnotated: ['Composable']
+complexity:
+  LongMethod:
+    ignoreAnnotated: ['Composable']
+  LongParameterList:
+    ignoreAnnotated: ['Composable']
+style:
+  MagicNumber:
+    ignorePropertyDeclaration: true
+    ignoreAnnotated: ['Composable']
+  MaxLineLength:
+    maxLineLength: 140

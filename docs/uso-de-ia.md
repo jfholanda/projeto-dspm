@@ -25,3 +25,7 @@ O Codex foi utilizado apenas como apoio para:
 ## Revisão
 
 João Felipe de Holanda revisou as alterações, mantém a responsabilidade pelo conteúdo submetido e deve compreender e conseguir explicar todas as decisões e arquivos durante a apresentação ou avaliação.
+
+## Fechamento da Sprint 1 — 17/10/2026
+
+A pedido do responsável, o Codex também auxiliou na implementação das telas, navegação tipada, formulários, estado demonstrativo, temas/adaptação, semântica, testes e CI, além da atualização da documentação e do roteiro de apresentação. As alterações desta etapa ainda devem ser revisadas e compreendidas pelo responsável antes da submissão acadêmica. A ferramenta não realizou a passagem humana com TalkBack nem a apresentação oral do integrante.

@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   quality:
     runs-on: ubuntu-latest
@@ -22,14 +25,36 @@ jobs:
       - name: Configurar Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Verificar formatação
-        run: ./gradlew ktlintCheck
+      - name: Configurar Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          cmdline-tools-version: '16111833'
 
-      - name: Executar análise estática
-        run: ./gradlew detekt
+      - name: Instalar plataforma Android
+        run: sdkmanager 'platforms;android-37.0' 'build-tools;36.0.0'
 
-      - name: Compilar Android
-        run: ./gradlew assembleDebug
+      - name: Verificar formatação e análise estática
+        run: ./gradlew ktlintCheck detekt
 
-      - name: Compilar Desktop
-        run: ./gradlew desktopJar
+      - name: Executar testes, incluindo interface Desktop
+        run: xvfb-run -a ./gradlew allTests
+
+      - name: Compilar Android e Desktop
+        run: ./gradlew assembleDebug desktopJar
+
+      - name: Publicar relatórios e capturas de teste
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprint-1-verificacao
+          path: |
+            composeApp/build/reports/
+            composeApp/build/test-results/
+
+      - name: Publicar APK e JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: revysa-sprint-1
+          path: |
+            composeApp/build/outputs/apk/debug/*.apk
+            composeApp/build/libs/*.jar

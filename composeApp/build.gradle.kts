@@ -1,7 +1,10 @@
+@file:Suppress("DEPRECATION", "DEPRECATION_ERROR")
+
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
+    alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
@@ -27,10 +30,23 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
+            implementation(libs.navigation.compose)
+            implementation(libs.kotlinx.serialization.json)
         }
 
         androidMain.dependencies {
             implementation(libs.androidx.activity.compose)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
+
+        val desktopTest by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation("org.jetbrains.compose.ui:ui-test-junit4:1.12.0")
+            }
         }
 
         desktopMain.dependencies {
@@ -71,4 +87,6 @@ compose.desktop {
 detekt {
     buildUponDefaultConfig = true
     parallel = true
+    source.setFrom(fileTree("src") { include("**/*.kt") })
+    config.setFrom(rootProject.file("config/detekt.yml"))
 }
