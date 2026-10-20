@@ -10,13 +10,14 @@ Perfil oferece os temas sistema/claro/escuro e acesso às superfícies de login/
 
 ## Organização
 
-- `App.kt` e `Routes.kt`: Navigation Compose com rotas tipadas serializadas, grafo da biblioteca, retorno e adaptação da navegação.
-- `LibraryScreens.kt`, `ReaderScreens.kt`, `ReviewScreens.kt`, `ProfileScreens.kt`: telas e ações.
+- `App.kt`, `Routes.kt` e `*RouteAdapters.kt`: Navigation Compose com rotas tipadas serializadas, grafo da biblioteca, retorno e adaptação da navegação.
+- `LibraryScreens.kt`, `ReaderScreens.kt`, `ReviewScreens.kt`, `ProfileScreens.kt`: componentes visuais sem acesso a sessão, catálogo global ou navegação; recebem dados e callbacks.
+- `ScreenStates.kt` e `*Previews.kt`: estados de apresentação e previews fixos das 13 superfícies, incluindo vazios e erros.
 - `Components.kt`: lista de tela, cartões de material, ações e progresso reutilizáveis.
 - `ThemeMode.kt` e `PlatformTheme.kt`: paletas, modo de aparência e barras de sistema Android.
 - `StudySession.kt`: catálogo próprio e estado demonstrativo compartilhado pela sessão.
 
-A largura máxima é de 760 dp. A navegação inferior troca para lateral quando a janela chega a 840 dp. Listas usam rolagem e chaves estáveis para os materiais e capítulos.
+A classe da janela vem de `currentWindowAdaptiveInfo().windowSizeClass`; a função pura `useNavigationRail` define o layout. A largura máxima é de 760 dp. A navegação inferior troca para lateral quando a janela chega a 840 dp. Listas usam rolagem e chaves estáveis para os materiais e capítulos.
 
 ## Deep links
 
@@ -25,6 +26,8 @@ O grafo resolve `revysa://material/machine-learning`, `revysa://material/design-
 Comandos e roteiro: [roteiro-sprint-1.md](roteiro-sprint-1.md).
 
 ## Testes e qualidade
+
+T9 passou para a Sprint 2 na regra atual da disciplina. A suíte abaixo é mantida como verificação adicional do fechamento, não como requisito de pontuação da Sprint 1.
 
 - `SprintOneUiTest`: telas principais, formulário vazio e com espaços, criação/revisão de cartão, notas/destaques, progresso, quiz, busca vazia, deep links válidos/inexistentes/repetidos e layouts de 390×740 e 1000×740 dp nos dois temas.
 - `ThemeContrastTest`: pares de texto/fundo das duas paletas com contraste de pelo menos 4,5:1.
@@ -58,8 +61,19 @@ JDK 17, Gradle 9.7.1, Kotlin 2.4.10, Compose Multiplatform 1.12.0, Navigation Co
 
 A estrutura atual ainda usa a compatibilidade legada do KMP com o plugin Android Application, declarada em `gradle.properties`. A migração de módulos pode ser tratada separadamente; os avisos de descontinuação não são suprimidos no build.
 
+## Fechamento de 20/10/2026
+
+Prazo atualizado conforme SIGAA informado pelo responsável. Pesos atuais: telas 30%, navegação 30%, tema/adaptação 20%, acessibilidade 20%.
+
+- Estado dos formulários, busca, revisão e quiz elevado aos adaptadores de rota; os componentes visuais não importam sessão ou navegação.
+- Previews das 13 superfícies com fixtures próprias, vazios e erros; teste percorre 20 variantes sem grafo de navegação.
+- Teclados e IME Próximo/Concluir; senha não salva no estado da Activity; entradas somente com espaços são rejeitadas.
+- Classes de janela e verificação de 599/600 e 839/840 dp, preservando o ponto de troca em 840 dp.
+- **Portão de qualidade local: BUILD SUCCESSFUL em 20/10/2026.** 17 testes de fluxo UI, um teste que renderiza 20 previews e cinco testes comuns (contraste/validação/layout), estes em Desktop e Android/JVM. Dois testes adicionais cobrem restauração de rota/nota e navegação lateral em janela baixa. Total: 30 execuções sem falhas. O CI dos PRs ainda deve ser conferido no commit entregue.
+- Cartões [#11–#18](https://github.com/jfholanda/projeto-dspm/issues?q=is%3Aissue+%22Sprint+1+T%22) atribuídos a João. Código anterior preservado; correções novas entram por PR, sem reescrita de histórico.
+
 ## Limitações e aceite manual
 
 Os dados sobrevivem à navegação, mas não ao encerramento da sessão/processo. Revisão registra avaliações e conclui a fila; não calcula agenda real de repetição. Quiz demonstrativo contém uma pergunta por material. Login/cadastro não criam contas.
 
-Ainda é necessário verificar TalkBack, escala de fontes e deep link em Android, gravar o vídeo com participação do responsável e confirmar a execução remota verde. Consulte [acessibilidade](acessibilidade-sprint-1.md) e [planejamento](planejamento-sprint-1.md). Testes Desktop não comprovam comportamento do sistema Android.
+Ainda é necessário verificar TalkBack, escala de fontes e deep link em Android, gravar o vídeo com participação do responsável e confirmar a execução remota verde dos novos PRs. Consulte [acessibilidade](acessibilidade-sprint-1.md) e [planejamento](planejamento-sprint-1.md). Testes Desktop não comprovam comportamento do sistema Android.

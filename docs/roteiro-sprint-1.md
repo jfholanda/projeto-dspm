@@ -4,14 +4,13 @@ Gravar o aplicativo em execução, com a explicação do responsável pelo proje
 
 | Tempo | Demonstração e explicação |
 |---|---|
-| 0:00–0:30 | Apresentar o Revysa e o fluxo de estudo ativo. Mostrar Home, próxima revisão e materiais. Explicar que o conteúdo é próprio e que os dados desta etapa ficam em memória. |
-| 0:30–1:15 | Abrir biblioteca, buscar material e experimentar uma busca sem resultados. Explorar o catálogo e adicionar Redes à biblioteca. Abrir disciplinas e escolher um material. |
-| 1:15–2:00 | Abrir dois capítulos diferentes, destacar uma ideia, salvar uma nota e voltar para confirmar que ela continua disponível na sessão. Marcar uma seção como lida e conferir progresso. |
-| 2:00–2:50 | Criar flashcard: tentar salvar vazio, mostrar os erros, preencher pergunta/resposta e salvar. Abrir revisão, revelar resposta, avaliar o cartão e concluir a fila. |
-| 2:50–3:20 | Abrir quiz, mostrar que conferir exige uma alternativa, responder e mostrar o feedback. Abrir perfil e mostrar as superfícies de login/cadastro. |
-| 3:20–4:00 | Alternar claro/escuro. Redimensionar a janela entre 390 e 1000 dp para mostrar barra inferior e navegação lateral. Mostrar foco e rótulos com TalkBack no Android. |
-| 4:00–4:30 | Disparar o deep link abaixo. Mostrar que ele abre diretamente o material, com retorno à Home. Explicar rotas tipadas e o grafo aninhado da biblioteca. |
-| 4:30–5:00 | Mostrar os resultados dos testes e do CI. Justificar Navigation Compose pela pilha de retorno e argumentos; Material 3 pelos componentes e semântica; testes Desktop pela UI compartilhada. Informar que backend, autenticação real, persistência e agendamento real de revisões ficam para etapas seguintes. |
+| 0:00–0:30 | Apresentar o incremento em uma frase por tela, com conteúdo próprio e dados em memória. |
+| 0:30–2:00 | Mostrar biblioteca, material, capítulo, destaque/nota, formulário com erro e criação/revisão de cartão; usar Voltar e mostrar o estado atualizado. |
+| 2:00–3:00 | Executar deep link no emulador e demonstrar layout estreito/largo, incluindo claro/escuro. |
+| 3:00–4:00 | TalkBack percorrendo uma tela, com áudio; explicar os ajustes de rótulos, foco, feedback, toque e cores. |
+| 4:00–5:00 | Mostrar CI verde, justificar estado elevado, rotas tipadas e classes de janela; dizer o que fica para a Sprint 2, a entrega final. |
+
+Prazo de fechamento: 20/10/2026, segundo o SIGAA informado pelo responsável. Preparar o emulador conforme [guia Windows](emulador-windows-sprint-1.md). João deve gravar sua apresentação; este roteiro não constitui evidência de vídeo.
 
 ## Deep link Android
 

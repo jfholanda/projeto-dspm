@@ -31,6 +31,8 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(libs.navigation.compose)
+            implementation(libs.material3.adaptive)
+            implementation(libs.compose.preview)
             implementation(libs.kotlinx.serialization.json)
         }
 
@@ -89,4 +91,8 @@ detekt {
     parallel = true
     source.setFrom(fileTree("src") { include("**/*.kt") })
     config.setFrom(rootProject.file("config/detekt.yml"))
+}
+
+dependencies {
+    debugImplementation(libs.compose.tooling)
 }

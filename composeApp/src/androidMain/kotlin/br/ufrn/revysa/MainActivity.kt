@@ -17,8 +17,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        requestId = savedInstanceState?.getInt("deepLinkRequestId") ?: 0
         incomingUri = intent.dataString
         setContent { App(deepLink = incomingUri, deepLinkRequestId = requestId) }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt("deepLinkRequestId", requestId)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onNewIntent(intent: Intent) {

@@ -1,6 +1,5 @@
 package br.ufrn.revysa
 
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +7,8 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -16,11 +17,11 @@ import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -40,17 +41,19 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import androidx.navigation.navOptions
 import androidx.navigation.toRoute
+import androidx.window.core.layout.WindowSizeClass
 
 @Composable
 fun App(
     deepLink: String? = null,
     deepLinkRequestId: Int = 0,
+    windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass,
 ) {
     val controller = rememberNavController()
-    val session = remember { StudySession() }
+    val session = rememberSaveable(saver = studySessionSaver) { StudySession() }
     var themeName by rememberSaveable { mutableStateOf(ThemeMode.System.name) }
     RevysaTheme(ThemeMode.valueOf(themeName)) {
-        AppLayout(controller) {
+        AppLayout(controller, windowSizeClass) {
             AppGraph(controller, session, ThemeMode.valueOf(themeName), deepLink, deepLinkRequestId) { themeName = it.name }
         }
     }
@@ -59,11 +62,12 @@ fun App(
 @Composable
 private fun AppLayout(
     controller: NavHostController,
+    windowSizeClass: WindowSizeClass,
     content: @Composable () -> Unit,
 ) {
     val entry by controller.currentBackStackEntryAsState()
-    BoxWithConstraints {
-        val wide = maxWidth >= 840.dp
+    val wide = useNavigationRail(windowSizeClass)
+    androidx.compose.material3.Surface {
         Scaffold(
             topBar = {
                 Row(Modifier.statusBarsPadding()) {
@@ -111,7 +115,10 @@ private fun AppNavigation(
         }
     }
     if (wide) {
-        NavigationRail(Modifier.testTag("navigation-rail"), containerColor = MaterialTheme.colorScheme.surfaceVariant) {
+        NavigationRail(
+            Modifier.verticalScroll(rememberScrollState()).testTag("navigation-rail"),
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        ) {
             items.indices.forEach { index ->
                 NavigationRailItem(
                     selected = selected[index],
@@ -146,31 +153,40 @@ private fun AppGraph(
     deepLinkRequestId: Int,
     onTheme: (ThemeMode) -> Unit,
 ) {
+    var handledUri by rememberSaveable { mutableStateOf<String?>(null) }
+    var handledRequest by rememberSaveable { mutableStateOf(-1) }
     NavHost(controller, startDestination = Home) {
-        composable<Home> { HomeScreen(session, controller::navigateTo) }
+        composable<Home> { HomeRoute(session, controller::navigateTo) }
         navigation<LibraryGraph>(startDestination = Library) {
-            composable<Library> { LibraryScreen(session, controller::navigateTo) }
-            composable<Subjects> { SubjectsScreen(controller::navigateTo) }
+            composable<Library> { LibraryRoute(session, controller::navigateTo) }
+            composable<Subjects> { SubjectsScreen(catalog) { controller.navigate(Material(it)) } }
             composable<Material>(deepLinks = listOf(navDeepLink<Material>(basePath = "revysa://material"))) { entry ->
-                MaterialScreen(entry.toRoute<Material>().id, session, controller::navigateTo)
+                MaterialRoute(entry.toRoute<Material>().id, session, controller::navigateTo)
             }
             composable<Reader> { entry ->
-                ReaderScreen(entry.toRoute(), session, controller::navigateTo)
+                ReaderRoute(entry.toRoute(), session, controller::navigateTo)
             }
-            composable<Notes> { entry -> NotesScreen(entry.toRoute(), session) }
+            composable<Notes> { entry -> NotesRoute(entry.toRoute(), session) }
             composable<CreateCard> { entry ->
-                CreateCardScreen(entry.toRoute(), session) { controller.popBackStack() }
+                CreateCardRoute(entry.toRoute(), session) { controller.popBackStack() }
             }
-            composable<Quiz> { entry -> QuizScreen(entry.toRoute<Quiz>().id, session) }
+            composable<Quiz> { entry -> QuizRoute(entry.toRoute<Quiz>().id, session) }
         }
-        composable<Review> { ReviewScreen(session) }
-        composable<Progress> { ProgressScreen(session, controller::navigateTo) }
-        composable<Profile> { ProfileScreen(theme, onTheme, controller::navigateTo) }
-        composable<Login> { AuthScreen(false, controller::navigateTo) }
-        composable<Register> { AuthScreen(true, controller::navigateTo) }
+        composable<Review> { ReviewRoute(session) }
+        composable<Progress> { ProgressRoute(session, controller::navigateTo) }
+        composable<Profile> {
+            ProfileScreen(theme, onTheme, onLogin = { controller.navigate(Login) }, onRegister = { controller.navigate(Register) })
+        }
+        composable<Login> { AuthRoute(false, controller::navigateTo) }
+        composable<Register> { AuthRoute(true, controller::navigateTo) }
     }
     LaunchedEffect(deepLink, deepLinkRequestId) {
-        if (deepLink != null && controller.graph.hasDeepLink(NavUri(deepLink))) {
+        val alreadyHandled = handledUri == deepLink && handledRequest == deepLinkRequestId
+        if (deepLink != null && !alreadyHandled &&
+            controller.graph.hasDeepLink(NavUri(deepLink))
+        ) {
+            handledUri = deepLink
+            handledRequest = deepLinkRequestId
             controller.navigate(NavUri(deepLink), navOptions { launchSingleTop = true })
         }
     }

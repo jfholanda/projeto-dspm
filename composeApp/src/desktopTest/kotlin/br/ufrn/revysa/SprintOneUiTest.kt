@@ -5,9 +5,13 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toAwtImage
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertHeightIsAtLeast
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.assertTextContains
@@ -18,16 +22,18 @@ import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import org.junit.Rule
 import org.junit.Test
 import java.io.File
 import javax.imageio.ImageIO
 
-@Suppress("TooManyFunctions") // Casos independentes de aceite da sprint.
+@Suppress("TooManyFunctions", "MagicNumber") // Casos de aceite; larguras e alturas são dados de teste.
 class SprintOneUiTest {
     @get:Rule
     val compose = createComposeRule()
@@ -40,7 +46,9 @@ class SprintOneUiTest {
     ) {
         expectedWidth = width
         compose.setContent {
-            Box(Modifier.requiredSize(width.dp, 740.dp).testTag("app")) { App(deepLink = link) }
+            Box(Modifier.requiredSize(width.dp, 740.dp).testTag("app")) {
+                App(deepLink = link, windowSizeClass = androidx.window.core.layout.WindowSizeClass.compute(width.toFloat(), 740f))
+            }
         }
     }
 
@@ -186,7 +194,11 @@ class SprintOneUiTest {
         val request = androidx.compose.runtime.mutableIntStateOf(0)
         compose.setContent {
             Box(Modifier.requiredSize(390.dp, 740.dp)) {
-                App(deepLink = "revysa://material/redes", deepLinkRequestId = request.intValue)
+                App(
+                    deepLink = "revysa://material/redes",
+                    deepLinkRequestId = request.intValue,
+                    windowSizeClass = androidx.window.core.layout.WindowSizeClass.compute(390f, 740f),
+                )
             }
         }
         compose.onNodeWithText("Redes de Computadores").assertIsDisplayed()
@@ -206,5 +218,64 @@ class SprintOneUiTest {
         click("submit-auth")
         compose.onNodeWithText("Informe um e-mail válido.").assertIsDisplayed()
         compose.onNodeWithText("Use pelo menos 6 caracteres.").assertIsDisplayed()
+    }
+
+    @Test
+    fun registrationKeyboardAdvancesFocusAndSubmits() {
+        launch()
+        click("nav-4")
+        click("open-register")
+        compose.onNodeWithTag("name").performTextInput("João")
+        compose.onNodeWithTag("name").performImeAction()
+        compose.onNodeWithTag("email").assertIsFocused().performTextInput("joao@example.com")
+        compose.onNodeWithTag("email").assert(SemanticsMatcher.expectValue(SemanticsProperties.ImeAction, ImeAction.Next))
+        compose.onNodeWithTag("email").performImeAction()
+        compose.onNodeWithTag("password").assertIsFocused().performTextInput("abcdef")
+        compose.onNodeWithTag("password").assert(SemanticsMatcher.expectValue(SemanticsProperties.ImeAction, ImeAction.Done))
+        compose.onNodeWithTag("password").performImeAction()
+        compose.onNodeWithText("Seu próximo passo de estudo").assertIsDisplayed()
+    }
+
+    @Test
+    fun searchSurvivesReturningFromMaterial() {
+        launch()
+        click("open-library")
+        compose.onNodeWithTag("search").performTextInput("Design")
+        click("material-design-software")
+        click("back")
+        compose.onNodeWithTag("search").assertTextContains("Design")
+    }
+
+    @Test
+    fun multilineCardIsPreservedDuringReview() {
+        launch(link = "revysa://material/redes")
+        click("create-card")
+        compose.onNodeWithTag("question").performTextInput("Primeira linha\nSegunda linha")
+        compose.onNodeWithTag("answer").performTextInput("Resposta\ncom detalhe")
+        click("save-card")
+        click("nav-2")
+        click("reveal")
+        click("rating-Acertei")
+        compose.onNodeWithTag("review-question").assertTextContains("Primeira linha\nSegunda linha")
+        click("reveal")
+        compose.onNodeWithTag("review-answer").assertTextContains("Resposta\ncom detalhe")
+    }
+
+    @Test
+    fun navigationUpdatesWhenWindowClassChanges() {
+        val width = androidx.compose.runtime.mutableIntStateOf(599)
+        compose.setContent {
+            Box(Modifier.requiredSize(width.intValue.dp, 740.dp)) {
+                App(windowSizeClass = androidx.window.core.layout.WindowSizeClass.compute(width.intValue.toFloat(), 740f))
+            }
+        }
+        listOf(599, 600, 839).forEach {
+            compose.runOnIdle { width.intValue = it }
+            compose.onNodeWithTag("navigation-bar").assertIsDisplayed()
+            compose.onNodeWithTag("navigation-rail").assertDoesNotExist()
+        }
+        compose.runOnIdle { width.intValue = 840 }
+        compose.onNodeWithTag("navigation-rail").assertIsDisplayed()
+        compose.onNodeWithTag("navigation-bar").assertDoesNotExist()
     }
 }

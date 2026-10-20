@@ -2,24 +2,26 @@ package br.ufrn.revysa
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun ProfileScreen(
     theme: ThemeMode,
     onTheme: (ThemeMode) -> Unit,
-    navigate: (Any) -> Unit,
+    onLogin: () -> Unit,
+    onRegister: () -> Unit,
 ) {
     Screen("Perfil") {
         item { Text("Sessão de demonstração. Suas atividades ficam disponíveis enquanto o app estiver aberto.") }
@@ -33,60 +35,41 @@ internal fun ProfileScreen(
                 modifier = Modifier.heightIn(min = 48.dp).testTag("theme-${mode.name}"),
             )
         }
-        item { Action("Entrar", "open-login") { navigate(Login) } }
-        item { Action("Criar conta", "open-register") { navigate(Register) } }
+        item { Action("Entrar", "open-login") { onLogin() } }
+        item { Action("Criar conta", "open-register") { onRegister() } }
     }
 }
 
-private const val MINIMUM_PASSWORD_LENGTH = 6
-
-internal data class AuthErrors(val name: String?, val email: String?, val password: String?) {
-    val valid: Boolean get() = listOf(name, email, password).all { it == null }
-}
-
-internal fun authErrors(
-    register: Boolean,
-    name: String,
-    email: String,
-    password: String,
-): AuthErrors =
-    AuthErrors(
-        name = if (register && name.isBlank()) "Informe seu nome." else null,
-        email = if (email.trim().matches(Regex("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"))) null else "Informe um e-mail válido.",
-        password = if (password.length < MINIMUM_PASSWORD_LENGTH) "Use pelo menos 6 caracteres." else null,
-    )
-
 @Composable
 internal fun AuthScreen(
-    register: Boolean,
-    navigate: (Any) -> Unit,
+    state: AuthUiState,
+    onName: (String) -> Unit,
+    onEmail: (String) -> Unit,
+    onPassword: (String) -> Unit,
+    onSubmit: () -> Unit,
+    onSwitch: () -> Unit,
 ) {
-    var name by rememberSaveable { mutableStateOf("") }
-    var email by rememberSaveable { mutableStateOf("") }
-    // A senha não participa do estado salvo da Activity.
-    var password by androidx.compose.runtime.remember { mutableStateOf("") }
-    var attempted by rememberSaveable { mutableStateOf(false) }
-    val errors = authErrors(register, name, email, password)
-    Screen(if (register) "Criar conta" else "Entrar") {
+    Screen(if (state.register) "Criar conta" else "Entrar") {
         item { Text("Experimente o fluxo com dados fictícios. Nesta demonstração, nenhuma conta será criada.") }
-        if (register) {
-            item { AuthField(name, { name = it }, "Nome", if (attempted) errors.name else null, "name") }
-        }
-        item { AuthField(email, { email = it }, "E-mail", if (attempted) errors.email else null, "email") }
-        item { AuthField(password, { password = it }, "Senha", if (attempted) errors.password else null, "password", secret = true) }
-        item {
-            Action("Continuar demonstração", "submit-auth") {
-                attempted = true
-                if (errors.valid) {
-                    password = ""
-                    navigate(Home)
-                }
-            }
+        if (state.register) {
+            item { AuthField(state.name, onName, "Nome", state.errors.name, "name") }
         }
         item {
-            Action(if (register) "Já tenho conta" else "Criar conta", "switch-auth") {
-                navigate(if (register) Login else Register)
-            }
+            AuthField(
+                state.email,
+                onEmail,
+                "E-mail",
+                state.errors.email,
+                "email",
+                keyboardType = KeyboardType.Email,
+            )
+        }
+        item { AuthField(state.password, onPassword, "Senha", state.errors.password, "password", secret = true, onSubmit = onSubmit) }
+        item {
+            Action("Continuar demonstração", "submit-auth", onClick = onSubmit)
+        }
+        item {
+            Action(if (state.register) "Já tenho conta" else "Criar conta", "switch-auth", onClick = onSwitch)
         }
     }
 }
@@ -99,6 +82,8 @@ private fun AuthField(
     error: String?,
     tag: String,
     secret: Boolean = false,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    onSubmit: () -> Unit = {},
 ) {
     OutlinedTextField(
         value = value,
@@ -106,8 +91,22 @@ private fun AuthField(
         label = { Text(label) },
         isError = error != null,
         supportingText = { error?.let { Text(it) } },
-        visualTransformation = if (secret) PasswordVisualTransformation() else androidx.compose.ui.text.input.VisualTransformation.None,
+        visualTransformation = if (secret) PasswordVisualTransformation() else VisualTransformation.None,
         modifier = Modifier.fillMaxWidth().testTag(tag),
         singleLine = true,
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = if (secret) KeyboardType.Password else keyboardType,
+                autoCorrectEnabled = !secret && keyboardType != KeyboardType.Email,
+                imeAction = if (secret) ImeAction.Done else ImeAction.Next,
+            ),
+        keyboardActions =
+            KeyboardActions(
+                onNext = { defaultKeyboardAction(ImeAction.Next) },
+                onDone = {
+                    onSubmit()
+                    defaultKeyboardAction(ImeAction.Done)
+                },
+            ),
     )
 }
