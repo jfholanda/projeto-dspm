@@ -1,6 +1,6 @@
 # Demonstração da Sprint 1 — cinco minutos
 
-Gravar o aplicativo em execução, com a explicação do responsável pelo projeto. Usar dados fictícios nos formulários. Este roteiro não é uma evidência de gravação: adicionar o link do vídeo ao README depois de gravar e publicar.
+Gravar o aplicativo em execução, com a explicação do responsável pelo projeto. Usar dados fictícios nos formulários. Este roteiro não é uma evidência de gravação: o responsável enviará o link separadamente ao professor depois de gravar e publicar, conforme decisão de 20/10.
 
 | Tempo | Demonstração e explicação |
 |---|---|

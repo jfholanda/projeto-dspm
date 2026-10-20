@@ -19,7 +19,7 @@
 
 Preparação: [guia do emulador Windows](emulador-windows-sprint-1.md).
 
-Usar aparelho ou emulador com TalkBack instalado e registrar modelo, versão Android e resultado. Em 20/10/2026 foi iniciado o emulador Windows Pixel 7/API 36, com TalkBack instalado. Conferências ADB/UIAutomator serão registradas separadamente; ainda é necessária a passagem humana ouvindo os anúncios.
+Usar aparelho ou emulador com TalkBack instalado e registrar modelo, versão Android e resultado. Em 20/10/2026 foi iniciado o emulador Windows Pixel 7/API 36, com TalkBack instalado. Conferências ADB/UIAutomator de orientação, temas e fonte a 1,3 estão nas [evidências Android](evidencias-android-sprint-1.md); ainda é necessária a passagem humana ouvindo os anúncios.
 
 - [ ] Percorrer Home e os cinco destinos; confirmar rótulos, ordem de foco e destino selecionado, sem leitura dos símbolos decorativos.
 - [ ] Abrir material, escolher capítulo e usar Voltar, incluindo o botão de retorno do sistema.

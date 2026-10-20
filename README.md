@@ -14,7 +14,7 @@ A navegação usa Navigation Compose com rotas tipadas, argumentos, grafo aninha
 
 Os dados são demonstrativos, com textos próprios, e ficam em memória durante a sessão. Login/cadastro validam a interface sem criar contas. Backend, autenticação real, persistência e sincronização pertencem às etapas posteriores.
 
-**Prazo:** 20/10/2026, conforme prorrogação no SIGAA informada pelo responsável. **Aceite final pendente:** evidências Android/TalkBack, vídeo, quadro Projects e integração dos PRs de fechamento. As evidências e limitações ficam em [docs/sprint-1.md](docs/sprint-1.md).
+**Prazo:** 20/10/2026, conforme prorrogação no SIGAA informada pelo responsável. **Código integrado:** [PR #19](https://github.com/jfholanda/projeto-dspm/pull/19), [CI verde na main](https://github.com/jfholanda/projeto-dspm/actions/runs/39466669530). **Aceite final pendente:** passagem humana Android/TalkBack, previews no Android Studio, vídeo enviado ao professor e quadro Projects. As evidências e limitações ficam em [docs/sprint-1.md](docs/sprint-1.md) e na [passagem Android](docs/evidencias-android-sprint-1.md).
 
 ## Executar
 
