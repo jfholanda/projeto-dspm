@@ -27,8 +27,8 @@
 - [x] Navegação tipada, argumentos e deep link implementados.
 - [x] Material 3 claro/escuro e decisão de layout por classe de janela.
 - [x] Testes de limites de largura, validação, IME, múltiplas linhas e retorno.
-- [ ] Integrar PR das correções novas com CI verde e registrar hash/link final.
-- [ ] Registrar as conferências Android, incluindo Voltar do sistema, deep link e orientação.
+- [x] Integrar [PR #19](https://github.com/jfholanda/projeto-dspm/pull/19) com [CI verde](https://github.com/jfholanda/projeto-dspm/actions/runs/39466151662). Commit de integração: `94812fc9bc29ccbba48ce2d029aa71f351c415ab`.
+- [x] Registrar as [conferências automatizadas Android](evidencias-android-sprint-1.md), incluindo Voltar do sistema, deep link, estado e orientação.
 - [ ] Percorrer as telas com TalkBack e fonte ampliada; registrar resultados e ajustes.
 - [ ] Gravar/publicar vídeo acessível e enviar o link diretamente ao professor, conforme decisão do responsável em 20/10.
 - [ ] Adicionar os oito cartões ao GitHub Projects, com responsável e vínculos aos PRs.

@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-20",
+  "device": "Pixel_7 / Google Play API 36 / Android 16 / Windows",
+  "code_commit": "b4688aed0d78f3557dc1269490861295b463434f",
+  "apk_sha256": "59af28bf4a7c2ebdccfabaee07db7922f0e008fcafe1b7b4b864cf44ea5d2aca",
+  "human_talkback": "pending",
+  "results": [
+    {
+      "step": "01-deep-link-cold",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "02-system-back",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "03-deep-link-warm",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "04-invalid-id",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "05-note-saved",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "06-progress-updated",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "07-dark-theme",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "08-landscape",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "09-landscape-rail",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "10-portrait-light",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "11-progress-after-rotation",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "12-large-font",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "13-card-errors",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    }
+  ]
+}
