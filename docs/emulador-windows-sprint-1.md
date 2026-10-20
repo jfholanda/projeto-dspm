@@ -50,7 +50,7 @@ Conferir material/capítulo correto, retorno à biblioteca ou Home e recuperaç�
 
 ## Vídeo
 
-Gravar a janela do emulador e sua apresentação, por exemplo com OBS Studio ou a ferramenta de captura do Windows que você já utiliza. Mostrar também a janela Desktop redimensionada e o CI verde. Seguir `roteiro-sprint-1.md`, publicar como não listado no YouTube e conferir o acesso em janela anônima.
+Gravar a janela do emulador e sua apresentação, por exemplo com OBS Studio ou a ferramenta de captura do Windows que você já utiliza. Mostrar também a janela Desktop redimensionada e o CI verde. Seguir `roteiro-sprint-1.md`, publicar como não listado no YouTube e conferir o acesso em janela anônima. O responsável optou por enviar o link diretamente ao professor; a publicação do PR de evidências não depende de inserir essa URL no README.
 
 ## Previews no Android Studio
 

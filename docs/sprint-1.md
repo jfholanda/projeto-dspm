@@ -69,7 +69,7 @@ Prazo atualizado conforme SIGAA informado pelo responsável. Pesos atuais: telas
 - Previews das 13 superfícies com fixtures próprias, vazios e erros; teste percorre 20 variantes sem grafo de navegação.
 - Teclados e IME Próximo/Concluir; senha não salva no estado da Activity; entradas somente com espaços são rejeitadas.
 - Classes de janela e verificação de 599/600 e 839/840 dp, preservando o ponto de troca em 840 dp.
-- **Portão de qualidade local: BUILD SUCCESSFUL em 20/10/2026.** 17 testes de fluxo UI, um teste que renderiza 20 previews e cinco testes comuns (contraste/validação/layout), estes em Desktop e Android/JVM. Total: 28 execuções sem falhas. O CI dos PRs ainda deve ser conferido no commit entregue.
+- **Portão de qualidade local: BUILD SUCCESSFUL em 20/10/2026.** 17 testes de fluxo UI, um teste que renderiza 20 previews e cinco testes comuns (contraste/validação/layout), estes em Desktop e Android/JVM. Dois testes adicionais cobrem restauração de rota/nota e navegação lateral em janela baixa. Total: 30 execuções sem falhas. O CI dos PRs ainda deve ser conferido no commit entregue.
 - Cartões [#11–#18](https://github.com/jfholanda/projeto-dspm/issues?q=is%3Aissue+%22Sprint+1+T%22) atribuídos a João. Código anterior preservado; correções novas entram por PR, sem reescrita de histórico.
 
 ## Limitações e aceite manual

@@ -82,7 +82,7 @@ Materiais: `machine-learning`, `design-software` e `redes`. Um ID inexistente mo
 
 [Guia do emulador Windows e previews](docs/emulador-windows-sprint-1.md). O Pixel 7/API 36 já está preparado, com TalkBack instalado. Isso não significa que a passagem humana com leitor de tela foi concluída.
 
-**Vídeo de cinco minutos:** gravação e publicação pendentes. O [roteiro](docs/roteiro-sprint-1.md) prepara a sequência, os comandos e as justificativas técnicas. Inserir aqui a URL real depois de publicar.
+**Vídeo de cinco minutos:** gravação e publicação pendentes. O [roteiro](docs/roteiro-sprint-1.md) prepara a sequência, os comandos e as justificativas técnicas. Por decisão do responsável em 20/10, o link será enviado separadamente ao professor. O envio ainda não foi confirmado.
 
 A implementação inclui rótulos, papéis, estados selecionados, áreas mínimas de 48 dp e testes de contraste. A passagem com leitor de tela e escala de fontes está em [acessibilidade-sprint-1.md](docs/acessibilidade-sprint-1.md), com os itens ainda não verificados explicitamente indicados.
 

@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -20,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -49,7 +50,7 @@ fun App(
     windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass,
 ) {
     val controller = rememberNavController()
-    val session = remember { StudySession() }
+    val session = rememberSaveable(saver = studySessionSaver) { StudySession() }
     var themeName by rememberSaveable { mutableStateOf(ThemeMode.System.name) }
     RevysaTheme(ThemeMode.valueOf(themeName)) {
         AppLayout(controller, windowSizeClass) {
@@ -114,7 +115,10 @@ private fun AppNavigation(
         }
     }
     if (wide) {
-        NavigationRail(Modifier.testTag("navigation-rail"), containerColor = MaterialTheme.colorScheme.surfaceVariant) {
+        NavigationRail(
+            Modifier.verticalScroll(rememberScrollState()).testTag("navigation-rail"),
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        ) {
             items.indices.forEach { index ->
                 NavigationRailItem(
                     selected = selected[index],
@@ -149,6 +153,8 @@ private fun AppGraph(
     deepLinkRequestId: Int,
     onTheme: (ThemeMode) -> Unit,
 ) {
+    var handledUri by rememberSaveable { mutableStateOf<String?>(null) }
+    var handledRequest by rememberSaveable { mutableStateOf(-1) }
     NavHost(controller, startDestination = Home) {
         composable<Home> { HomeRoute(session, controller::navigateTo) }
         navigation<LibraryGraph>(startDestination = Library) {
@@ -175,7 +181,12 @@ private fun AppGraph(
         composable<Register> { AuthRoute(true, controller::navigateTo) }
     }
     LaunchedEffect(deepLink, deepLinkRequestId) {
-        if (deepLink != null && controller.graph.hasDeepLink(NavUri(deepLink))) {
+        val alreadyHandled = handledUri == deepLink && handledRequest == deepLinkRequestId
+        if (deepLink != null && !alreadyHandled &&
+            controller.graph.hasDeepLink(NavUri(deepLink))
+        ) {
+            handledUri = deepLink
+            handledRequest = deepLinkRequestId
             controller.navigate(NavUri(deepLink), navOptions { launchSingleTop = true })
         }
     }

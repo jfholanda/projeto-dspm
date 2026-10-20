@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import kotlinx.serialization.Serializable
 
 internal data class Chapter(val title: String, val text: String, val keyIdea: String)
 
@@ -89,8 +90,10 @@ internal val catalog =
         ),
     )
 
+@Serializable
 internal data class StudyCard(val materialId: String, val chapter: Int, val question: String, val answer: String)
 
+@Serializable
 internal data class StudyNote(val materialId: String, val chapter: Int, val text: String)
 
 /** Estado demonstrativo de uma sessão. Persistência e autenticação ficam para a Sprint 2, conforme o cronograma atualizado. */

@@ -30,7 +30,7 @@
 - [ ] Integrar PR das correções novas com CI verde e registrar hash/link final.
 - [ ] Registrar as conferências Android, incluindo Voltar do sistema, deep link e orientação.
 - [ ] Percorrer as telas com TalkBack e fonte ampliada; registrar resultados e ajustes.
-- [ ] Gravar/publicar vídeo acessível e inserir URL no README.
+- [ ] Gravar/publicar vídeo acessível e enviar o link diretamente ao professor, conforme decisão do responsável em 20/10.
 - [ ] Adicionar os oito cartões ao GitHub Projects, com responsável e vínculos aos PRs.
 - [ ] Integrar PR das evidências e conferir o CI da main no hash entregue.
 

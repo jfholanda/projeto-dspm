@@ -33,3 +33,5 @@ A pedido do responsável, o Codex também auxiliou na implementação das telas,
 ## Correções de fechamento — 20/10/2026
 
 O Codex auxiliou na separação de adaptadores e telas, estados de apresentação, previews, teclados/IME, classes de janela, testes e preparação do emulador Windows. Também criou os cartões de fechamento e preparou documentação e PRs. A passagem humana com TalkBack, a gravação/apresentação e a submissão no SIGAA continuam a cargo de João; não são atribuídas à ferramenta. O novo prazo de 20/10 foi informado pelo responsável como formalizado no SIGAA.
+
+A passagem automatizada no emulador identificou problemas de rotação e alcance da navegação lateral. A IA auxiliou nas correções, no snapshot de interface e nos testes de regressão. A avaliação auditiva do TalkBack continua pendente.
