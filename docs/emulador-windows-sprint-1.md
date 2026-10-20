@@ -55,3 +55,7 @@ Gravar a janela do emulador e sua apresentação, por exemplo com OBS Studio ou 
 ## Previews no Android Studio
 
 Abrir o projeto e sincronizar o Gradle. Em `commonMain`, abrir `LibraryPreviews.kt`, `ReaderPreviews.kt`, `StudyPreviews.kt` e `ProfilePreviews.kt`; selecionar a visualização de previews. São dados fixos, sem NavController, catálogo global ou sessão de produção. Conferir especialmente os casos vazios e erros. A renderização dos componentes é exercitada pela suíte Desktop, mas a inspeção no Android Studio ainda deve ser registrada pelo responsável.
+
+## Teclado do emulador
+
+Se o Gboard abrir “Try out your stylus”, cancelar o tutorial antes de testar campos. Na passagem de 20/10 foi necessário desativar escrita por caneta apenas no AVD: `adb shell settings put secure stylus_handwriting_enabled 0`. Isso permitiu a entrada convencional no formulário. Não altera o aplicativo. O System UI também apresentou lentidão durante a preparação; repetir a demonstração somente depois que o emulador estiver estável.

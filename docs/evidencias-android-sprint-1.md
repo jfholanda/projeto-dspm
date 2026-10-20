@@ -29,10 +29,15 @@ Código validado: `b4688aed0d78f3557dc1269490861295b463434f`, integrado pelo [PR
 | Progresso preservado após rotação | [Captura](imagens/sprint-1/android/11-progress-after-rotation.png) |
 | Fonte do sistema ampliada para 1,3 | [Captura](imagens/sprint-1/android/12-large-font.png) |
 | Cartão vazio apresenta erros junto aos campos | [Captura](imagens/sprint-1/android/13-card-errors.png) |
+| Cartão válido salvo retorna ao material | [Captura](imagens/sprint-1/android/14-card-saved.png) |
+| Novo cartão encontrado e revelado na revisão | [Captura](imagens/sprint-1/android/15-card-review.png) |
+| Alternativa correta do quiz selecionada e conferida | [Captura](imagens/sprint-1/android/16-quiz.png) |
 
 A passagem encontrou e corrigiu a repetição do deep link na recriação da Activity, a perda do estado demonstrativo na rotação e a navegação lateral cortada em janelas baixas. Os testes de regressão verificam restauração da rota, nota salva e acesso ao Perfil em 1000×360 dp. O snapshot de interface usa estado salvo da Activity, sem banco ou backend. A sessão não oferece persistência durável ao usuário.
 
-A digitação rápida por `adb shell input text` foi truncada durante a automação. A nota efetivamente salva aparece como `Not`; sua recuperação foi conferida ao sair e retornar. A digitação pelo teclado do usuário ainda precisa ser confirmada na passagem humana Android. Não se atribui a causa desse comportamento ao aplicativo ou ao emulador sem essa confirmação.
+A digitação inicial por ADB foi truncada/interceptada. A nota efetivamente salva aparece como `Not`; sua recuperação foi conferida ao sair e retornar. A inspeção posterior revelou o tutorial de caneta do Gboard sobre o formulário. Após cancelar o tutorial e desativar escrita por caneta no AVD (`stylus_handwriting_enabled=0`), a entrada convencional e o salvamento de um cartão de demonstração com pergunta `q` e resposta `a` funcionaram. Isso não substitui a revisão humana do teclado, foco e anúncios com TalkBack.
+
+A passagem automatizada também concluiu a fila de revisão após avaliar os dois cartões e conferiu o feedback correto do quiz. Total: 16 verificações/capturas, sem contabilizar tentativas de automação interrompidas como aceite.
 
 ## Estado de entrega
 
@@ -40,7 +45,6 @@ A main passou no [CI de integração do código](https://github.com/jfholanda/pr
 
 ## Pendências humanas
 
-- Confirmar digitação pelo teclado Android e o fluxo completo de criação/revisão de cartão e quiz; essas interações estão cobertas nos testes Desktop, mas a automação Android de entrada ainda não concluiu esse percurso.
 - Percorrer o fluxo completo com TalkBack, ouvir anúncios, conferir ordem de foco, erros, seleção e alcance de ações; registrar resultado e eventuais correções em [acessibilidade](acessibilidade-sprint-1.md).
 - Abrir os previews no Android Studio, incluindo vazios e erros; o teste automatizado já renderiza 20 variantes.
 - Gravar a apresentação de aproximadamente cinco minutos. O responsável optou por enviar o link separadamente ao professor; esse envio ainda não foi confirmado.

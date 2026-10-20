@@ -69,6 +69,22 @@
       "step": "13-card-errors",
       "result": "passed",
       "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "14-card-saved",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "15-card-review",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
+    },
+    {
+      "step": "16-quiz",
+      "result": "passed",
+      "method": "ADB + UIAutomator; sem passagem humana TalkBack"
     }
-  ]
+  ],
+  "keyboard_setup": "Tutorial de caneta Gboard cancelado; stylus_handwriting_enabled=0 no AVD"
 }
