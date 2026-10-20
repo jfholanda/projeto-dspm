@@ -1,40 +1,48 @@
 # Planejamento — Sprint 1: interface e navegação
 
-**Período previsto:** 14/09 a 02/10/2026 · **Entrega prevista:** 02/10/2026, 23h59.
+**Prazo de fechamento:** 20/10/2026. O responsável informou prorrogação formalizada no SIGAA; horário adotado para organização: 23h59, America/Sao_Paulo. O repositório público da disciplina ainda registra 16/10 como prazo anterior.
 
-**Situação:** implementação de fechamento preparada; aceite final depende das evidências de execução descritas abaixo. Este documento registra uma conferência interna, não uma avaliação oficial.
+**Objetivo:** fechar telas e navegação do Revysa, com dados em memória, segundo as tarefas atuais da disciplina. Projeto individual de João Felipe de Holanda.
 
-## Escopo implementado
+## Rubrica atual e rastreabilidade
 
-| Critério da disciplina | Implementação |
-|---|---|
-| Telas do MVP (25%) | Home; biblioteca pessoal/explorar com busca e vazio; disciplinas; material; capítulos; leitor; destaques/notas; criação e revisão de cartões; quiz; progresso; perfil; superfícies de login/cadastro com validação demonstrativa. |
-| Navegação (25%) | Navigation Compose 2.9.2, rotas serializáveis tipadas, argumentos de material/capítulo, grafo aninhado da biblioteca e pilha de retorno. Deep link `revysa://material/{id}` resolvido pelo grafo, também quando o Android recebe novo Intent. |
-| Tema/adaptação (20%) | Material 3, opções sistema/claro/escuro; cores derivadas da paleta; barra inferior abaixo de 840 dp e lateral a partir dessa largura; conteúdo limitado a 760 dp e listas roláveis. |
-| Acessibilidade (15%) | Rótulos visíveis, semântica de seleção, títulos como cabeçalhos, feedback com live region, campos com erro e ações de ≥48 dp. Testes de contraste da paleta e roteiro de verificação com TalkBack. |
-| Testes de interface (15%) | Suíte Desktop sobre a mesma UI compartilhada do Android: navegação, argumentos, deep links, formulários, notas, leitura/progresso, revisão, quiz e duas larguras/temas. CI executa `allTests` com Xvfb e publica relatórios/capturas. |
-| Formulário | Pergunta/resposta obrigatórias, inclusive rejeição de apenas espaços. Cartões vinculados ao material/capítulo entram na revisão da sessão. |
+| Critério | Peso | Fechamento |
+|---|---:|---|
+| Telas do MVP | 30% | Componentes visuais recebem estados e callbacks; adaptadores de rota controlam estado e alterações. Previews das 13 superfícies, incluindo vazios e erros. T2 [#11](https://github.com/jfholanda/projeto-dspm/issues/11), formulários T3 [#12](https://github.com/jfholanda/projeto-dspm/issues/12). |
+| Navegação | 30% | Grafo tipado, argumentos, retorno e deep link. Conferências Android: T4 [#13](https://github.com/jfholanda/projeto-dspm/issues/13) e T5 [#14](https://github.com/jfholanda/projeto-dspm/issues/14). |
+| Tema e adaptação | 20% | Material 3 claro/escuro; classe de janela obtida por `currentWindowAdaptiveInfo().windowSizeClass`; navegação inferior abaixo de 840 dp e lateral a partir de 840 dp. T6 [#15](https://github.com/jfholanda/projeto-dspm/issues/15) e T7 [#16](https://github.com/jfholanda/projeto-dspm/issues/16). |
+| Acessibilidade | 20% | Rótulos, seleção, cabeçalhos, erros, contraste e alvos mínimos. A passagem humana com TalkBack continua necessária: T8 [#17](https://github.com/jfholanda/projeto-dspm/issues/17). |
 
-## Checklist de fechamento
+**T9:** testes de interface passaram para a Sprint 2. A suíte existente foi preservada e ampliada como verificação do fechamento; não é apresentada como requisito atual da Sprint 1.
 
-- [x] Telas do MVP implementadas e ligadas ao fluxo demonstrativo.
-- [x] Navigation Compose, rotas tipadas, argumentos, aninhamento e deep link implementados.
-- [x] Tema claro/escuro e adaptação entre navegação inferior/lateral implementados.
-- [x] Formulário de flashcard com validação e integração à revisão em memória.
-- [x] Semântica, áreas mínimas e testes de contraste implementados.
-- [x] Suíte de UI e execução em CI configuradas.
-- [x] Confirmar portão local completo e registrar o resultado em `docs/sprint-1.md`.
-- [ ] Conferir CI verde no commit entregue e na `main` após integração.
-- [ ] Demonstrar o deep link no Android em aparelho/emulador.
-- [ ] Executar a passagem manual com TalkBack e escala de fontes; registrar evidência.
-- [ ] Gravar vídeo de cinco minutos com participação do responsável e ligar no README.
+**T10:** vídeo de cinco minutos com fala do responsável, conforme [#18](https://github.com/jfholanda/projeto-dspm/issues/18) e [roteiro](roteiro-sprint-1.md).
 
-## Entrega e evidências
+## Checklist de aceite
 
-- [Implementação e validação](sprint-1.md).
-- [Acessibilidade e verificação Android](acessibilidade-sprint-1.md).
-- [Roteiro de vídeo e comandos de deep link](roteiro-sprint-1.md).
+- [x] Telas do MVP e componentes reutilizáveis.
+- [x] Estado elevado aos adaptadores; telas recebem dados e callbacks, sem acessar sessão ou navegar.
+- [x] Previews com dados fixos, casos vazios e erros; renderização automatizada em Desktop.
+- [ ] Conferir os previews visualmente no Android Studio.
+- [x] Formulários validados, teclados apropriados e IME Próximo/Concluir.
+- [x] Navegação tipada, argumentos e deep link implementados.
+- [x] Material 3 claro/escuro e decisão de layout por classe de janela.
+- [x] Testes de limites de largura, validação, IME, múltiplas linhas e retorno.
+- [ ] Integrar PR das correções novas com CI verde e registrar hash/link final.
+- [ ] Registrar as conferências Android, incluindo Voltar do sistema, deep link e orientação.
+- [ ] Percorrer as telas com TalkBack e fonte ampliada; registrar resultados e ajustes.
+- [ ] Gravar/publicar vídeo acessível e inserir URL no README.
+- [ ] Adicionar os oito cartões ao GitHub Projects, com responsável e vínculos aos PRs.
+- [ ] Integrar PR das evidências e conferir o CI da main no hash entregue.
 
-## Limites de escopo
+## Processo e limites
 
-Conteúdo próprio demonstrativo e estado em memória. Login/cadastro representam a interface e sua validação; não criam contas reais. Persistência, Supabase, sincronização e política offline são Sprint 3. O algoritmo de repetição espaçada e a separação completa com ViewModels/casos de uso pertencem às etapas seguintes. Não marcar testes de dispositivo, vídeo ou CI remoto como concluídos sem a evidência correspondente.
+O commit anterior `c27b8f2` entrou diretamente na main. As correções novas usam PRs; o histórico anterior não é reescrito. Os cartões #11–#18 estão atribuídos a `jfholanda`. O conector permite gerenciar issues/PRs, mas não oferece edição de GitHub Projects; a inclusão no quadro ainda precisa ser confirmada. Não há revisão por outro integrante, pois o projeto é individual.
+
+Dados, catálogo e progresso continuam demonstrativos/em memória. ViewModels, rede, autenticação real e persistência não entram neste fechamento. O cronograma atualizado concentra a continuidade na Sprint 2, que é a entrega final; as referências antigas a Sprint 3 não determinam o escopo desta sprint.
+
+## Evidências
+
+- [Implementação e testes](sprint-1.md).
+- [Acessibilidade e passagem manual](acessibilidade-sprint-1.md).
+- [Roteiro do vídeo](roteiro-sprint-1.md).
+- [Preparação e comandos no Windows](emulador-windows-sprint-1.md).

@@ -4,15 +4,17 @@ Aplicativo de estudo ativo: leitura estruturada, destaques, notas, flashcards, q
 
 Projeto individual de **João Felipe de Holanda**, Coorte B.
 
-## Sprint 1
+## Sprint 1 — fechamento em 20/10/2026
 
 A interface compartilhada inclui Home, biblioteca pessoal/explorar com busca, disciplinas, materiais, capítulos, leitor, destaques/notas, criação e revisão de cartões, quiz, progresso, perfil e superfícies de login/cadastro.
 
-A navegação usa Navigation Compose com rotas tipadas, argumentos, grafo aninhado e deep links. O tema Material 3 oferece sistema/claro/escuro. Em janelas menores que 840 dp há navegação inferior; em janelas maiores, navegação lateral.
+As telas recebem estados e callbacks; os adaptadores de rota controlam os dados em memória e as ações. Há previews com dados fixos das 13 superfícies, incluindo estados vazios e erros. Os formulários configuram teclado e ações IME de acordo com o campo.
+
+A navegação usa Navigation Compose com rotas tipadas, argumentos, grafo aninhado e deep links. O tema Material 3 oferece sistema/claro/escuro. A classe da janela é obtida por `currentWindowAdaptiveInfo().windowSizeClass`. Em janelas menores que 840 dp há navegação inferior; em janelas maiores, navegação lateral.
 
 Os dados são demonstrativos, com textos próprios, e ficam em memória durante a sessão. Login/cadastro validam a interface sem criar contas. Backend, autenticação real, persistência e sincronização pertencem às etapas posteriores.
 
-**Aceite final pendente:** passagem Android com TalkBack/deep link, gravação do vídeo e confirmação do CI no commit integrado. As evidências e limitações ficam em [docs/sprint-1.md](docs/sprint-1.md).
+**Prazo:** 20/10/2026, conforme prorrogação no SIGAA informada pelo responsável. **Aceite final pendente:** evidências Android/TalkBack, vídeo, quadro Projects e integração dos PRs de fechamento. As evidências e limitações ficam em [docs/sprint-1.md](docs/sprint-1.md).
 
 ## Executar
 
@@ -49,7 +51,7 @@ adb install -r composeApp/build/outputs/apk/debug/composeApp-debug.apk
 ./gradlew allTests
 ```
 
-Em Linux sem servidor gráfico, usar `xvfb-run -a ./gradlew allTests`. A suíte exercita a interface compartilhada no alvo Desktop; isso não substitui testes manuais do Android. O CI executa essas verificações e publica APK, JAR, relatórios e capturas como artefatos da execução.
+Em Linux sem servidor gráfico, usar `xvfb-run -a ./gradlew allTests`. Os testes de interface foram movidos para a Sprint 2 pela disciplina; mantemos a suíte como verificação adicional. Ela exercita a interface compartilhada no alvo Desktop; isso não substitui testes manuais do Android. O CI executa essas verificações e publica APK, JAR, relatórios e capturas como artefatos da execução.
 
 Relatório local de testes: `composeApp/build/reports/tests/desktopTest/index.html`. Capturas dos dois temas e larguras: `composeApp/build/reports/sprint-1/`.
 
@@ -57,7 +59,7 @@ Relatório local de testes: `composeApp/build/reports/tests/desktopTest/index.ht
 
 [Celular claro](docs/imagens/sprint-1/celular-claro.png) · [Celular escuro](docs/imagens/sprint-1/celular-escuro.png) · [Desktop claro](docs/imagens/sprint-1/desktop-claro.png) · [Desktop escuro](docs/imagens/sprint-1/desktop-escuro.png).
 
-Validação local: `ktlintCheck`, `detekt`, `allTests`, APK e JAR concluídos. São 13 testes de UI e dois testes comuns de contraste, estes executados em Desktop e Android/JVM.
+Validação local: `ktlintCheck`, `detekt`, `allTests`, APK e JAR concluídos. A suíte preserva os 13 testes de UI anteriores e acrescenta IME, retorno da busca, texto multilinha e limites de largura, além de renderização dos previews e testes comuns de validação/contraste.
 
 ## Demonstrar deep link
 
@@ -77,6 +79,8 @@ Desktop:
 Materiais: `machine-learning`, `design-software` e `redes`. Um ID inexistente mostra uma tela de recuperação.
 
 ## Vídeo e acessibilidade
+
+[Guia do emulador Windows e previews](docs/emulador-windows-sprint-1.md). O Pixel 7/API 36 já está preparado, com TalkBack instalado. Isso não significa que a passagem humana com leitor de tela foi concluída.
 
 **Vídeo de cinco minutos:** gravação e publicação pendentes. O [roteiro](docs/roteiro-sprint-1.md) prepara a sequência, os comandos e as justificativas técnicas. Inserir aqui a URL real depois de publicar.
 
@@ -100,6 +104,7 @@ config/detekt.yml            regras de análise Kotlin/Compose
 - [Implementação, testes e limites da Sprint 1](docs/sprint-1.md)
 - [Roteiro de demonstração](docs/roteiro-sprint-1.md)
 - [Acessibilidade](docs/acessibilidade-sprint-1.md)
+- [Emulador Windows](docs/emulador-windows-sprint-1.md)
 - [Proposta do produto](docs/proposta.md)
 - [PRD](PRD.md)
 - [Registro de uso de IA](docs/uso-de-ia.md)

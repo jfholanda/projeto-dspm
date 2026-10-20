@@ -93,7 +93,7 @@ internal data class StudyCard(val materialId: String, val chapter: Int, val ques
 
 internal data class StudyNote(val materialId: String, val chapter: Int, val text: String)
 
-/** Estado demonstrativo de uma sessão. Persistência e autenticação entram na Sprint 3. */
+/** Estado demonstrativo de uma sessão. Persistência e autenticação ficam para a Sprint 2, conforme o cronograma atualizado. */
 internal class StudySession {
     val savedMaterials = mutableStateListOf("machine-learning", "design-software")
     val cards =
