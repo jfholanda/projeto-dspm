@@ -20,10 +20,12 @@ internal fun HomeRoute(navigate: (Any) -> Unit) {
     StudyStateContent(state, viewModel::retry) { snapshot ->
         val materials = viewModel.materials().filter { it.id in snapshot.savedMaterialIds }
         HomeScreen(
-            HomeUiState(materialItems(snapshot, materials, viewModel), snapshot.reviewed),
+            HomeUiState(materialItems(snapshot, materials, viewModel), snapshot.reviewed, viewModel.homeSummary(snapshot)),
             onReview = { navigate(Review) },
             onLibrary = { navigate(LibraryGraph) },
             onSubjects = { navigate(Subjects) },
+            onExplore = { navigate(Subjects) },
+            onContinueReading = { target -> navigate(Reader(target.materialId, target.chapterIndex)) },
             onMaterial = { navigate(Material(it)) },
         )
     }

@@ -2,17 +2,19 @@ package br.ufrn.revysa
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import br.ufrn.revysa.domain.model.HomePrimaryAction
+import br.ufrn.revysa.domain.model.StudyHomeSummary
 
 @Preview(name = "HomePreview", widthDp = 390, heightDp = 740)
 @Composable
 internal fun HomePreview() {
-    PreviewFrame { HomeScreen(HomeUiState(listOf(PreviewFixtures.item), 2), {}, {}, {}, {}) }
+    PreviewFrame { HomeScreen(HomeUiState(listOf(PreviewFixtures.item), 2, PreviewFixtures.homeSummary), {}, {}, {}, {}, {}, {}) }
 }
 
 @Preview(name = "HomeEmptyPreview", widthDp = 390, heightDp = 740)
 @Composable
 internal fun HomeEmptyPreview() {
-    PreviewFrame { HomeScreen(HomeUiState(emptyList(), 0), {}, {}, {}, {}) }
+    PreviewFrame { HomeScreen(HomeUiState(emptyList(), 0, StudyHomeSummary(0, null, HomePrimaryAction.EXPLORE_CATALOG)), {}, {}, {}, {}, {}, {}) }
 }
 
 @Preview(name = "LibraryPreview", widthDp = 390, heightDp = 740)

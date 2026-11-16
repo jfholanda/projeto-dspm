@@ -78,6 +78,21 @@ class SprintOneUiTest {
     }
 
     @Test
+    fun homeShowsReviewCountAndOpensSuggestedReading() {
+        launch()
+        compose.onNodeWithTag("start-review").assertTextContains("Revisar 1 cartão")
+        click("continue-reading")
+        compose.onNodeWithText("Introdução").assertIsDisplayed()
+    }
+
+    @Test
+    fun homeReviewActionOpensDueQueue() {
+        launch()
+        click("start-review")
+        compose.onNodeWithTag("review-question").assertTextContains("taxa de aprendizado")
+    }
+
+    @Test
     fun emptyFlashcardShowsBothErrors() {
         launch(link = "revysa://material/machine-learning")
         click("create-card")

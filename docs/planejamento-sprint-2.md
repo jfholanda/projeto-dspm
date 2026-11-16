@@ -11,6 +11,7 @@
 - Introduzir ViewModels multiplataforma com `StateFlow`, injetados por Koin.
 - Representar estados de tela como `Loading`, `Error`, `Empty` e `Success` usando tipos selados.
 - Mover regras do fluxo de leitura, flashcards, quiz e revisão para casos de uso; definir e testar o algoritmo inicial de repetição espaçada descrito no PRD.
+- Orientar a Home para a próxima ação: revisões vencidas, leitura pendente na ordem da biblioteca pessoal ou exploração do catálogo.
 - Documentar a arquitetura e justificar escolhas.
 
 ## Tarefas e pronto quando
@@ -24,6 +25,7 @@
 | S2-05 | Testar ViewModels com Turbine e dependências dublês. | Pelo menos oito testes relevantes passam no CI. |
 | S2-06 | Produzir `docs/arquitetura.md`. | Diagrama mostra dependências entre camadas; documento justifica StateFlow/ViewModel e Koin e registra alternativas consideradas. |
 | S2-07 | Preservar apresentação do produto. | Fluxo principal continua executável em Android e Desktop; vídeo de cinco minutos ligado no README. |
+| S2-08 | Orientar a Home para a próxima ação de estudo. | Revisões vencidas são priorizadas; sem revisões, sugere o primeiro capítulo não lido na ordem da biblioteca; sem pendências, oferece o catálogo. A regra usa o progresso e cartões existentes e não exige novo estado persistido. |
 
 ## Critérios de aceite da disciplina
 
@@ -33,7 +35,14 @@
 - [ ] Koin configurado em `commonMain`.
 - [ ] ≥8 testes de ViewModel com Turbine e dublês injetados, verdes no CI.
 - [ ] `docs/arquitetura.md` com diagrama e justificativas.
+- [ ] Home apresenta a próxima ação com base nas revisões vencidas e na leitura pendente; testes cobrem vencimentos, ordenação, conclusão e fallback.
 - [ ] Vídeo de cinco minutos, PRs/issues rastreáveis e CI verde.
+
+## Rastreamento S2-08
+
+- Issue: [#35 — Orientar a Home para a próxima ação de estudo](https://github.com/jfholanda/projeto-dspm/issues/35).
+- PR: a vincular.
+- Dependências: S2-01 a S2-04 (Issues #21–#24).
 
 ## Fora do escopo
 

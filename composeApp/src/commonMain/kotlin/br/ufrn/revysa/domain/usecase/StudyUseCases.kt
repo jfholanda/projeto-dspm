@@ -1,10 +1,13 @@
 package br.ufrn.revysa.domain.usecase
 
 import br.ufrn.revysa.domain.model.ChapterReference
+import br.ufrn.revysa.domain.model.HomePrimaryAction
 import br.ufrn.revysa.domain.model.ReviewRating
 import br.ufrn.revysa.domain.model.StudyCard
+import br.ufrn.revysa.domain.model.StudyHomeSummary
 import br.ufrn.revysa.domain.model.StudyMaterial
 import br.ufrn.revysa.domain.model.StudyNote
+import br.ufrn.revysa.domain.model.StudyReadingSuggestion
 import br.ufrn.revysa.domain.model.StudySnapshot
 import br.ufrn.revysa.domain.repository.StudyRepository
 import kotlinx.coroutines.flow.Flow
@@ -89,6 +92,33 @@ internal class StudyUseCases(
     fun reviewDueCards(snapshot: StudySnapshot = repository.currentStudy()): List<StudyCard> {
         val now = clock.nowMillis()
         return snapshot.cards.filter { it.nextReviewAtEpochMillis <= now }
+    }
+
+    fun homeSummary(snapshot: StudySnapshot): StudyHomeSummary {
+        val dueReviewCount = reviewDueCards(snapshot).size
+        val nextReading =
+            snapshot.savedMaterialIds.firstNotNullOfOrNull { materialId ->
+                val material = repository.findMaterial(materialId) ?: return@firstNotNullOfOrNull null
+                val chapterIndex =
+                    material.chapters.indices.firstOrNull { chapter ->
+                        ChapterReference(materialId, chapter) !in snapshot.readChapters
+                    } ?: return@firstNotNullOfOrNull null
+                val readCount = snapshot.readChapters.count { it.materialId == materialId }
+                StudyReadingSuggestion(
+                    materialId,
+                    chapterIndex,
+                    material.title,
+                    material.chapters[chapterIndex].title,
+                    if (material.chapters.isEmpty()) 0f else readCount.toFloat() / material.chapters.size,
+                )
+            }
+        val primaryAction =
+            when {
+                dueReviewCount > 0 -> HomePrimaryAction.REVIEW
+                nextReading != null -> HomePrimaryAction.CONTINUE_READING
+                else -> HomePrimaryAction.EXPLORE_CATALOG
+            }
+        return StudyHomeSummary(dueReviewCount, nextReading, primaryAction)
     }
 
     fun recordReview(
