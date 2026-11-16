@@ -41,7 +41,7 @@
 ## Rastreamento S2-08
 
 - Issue: [#35 — Orientar a Home para a próxima ação de estudo](https://github.com/jfholanda/projeto-dspm/issues/35).
-- PR: a vincular.
+- PR: [#36 — Orienta a Home para a próxima ação de estudo](https://github.com/jfholanda/projeto-dspm/pull/36).
 - Dependências: S2-01 a S2-04 (Issues #21–#24).
 
 ## Fora do escopo
