@@ -20,8 +20,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -42,6 +44,8 @@ import androidx.navigation.navDeepLink
 import androidx.navigation.navOptions
 import androidx.navigation.toRoute
 import androidx.window.core.layout.WindowSizeClass
+import br.ufrn.revysa.presentation.StudyViewModel
+import org.koin.compose.KoinApplication
 
 @Composable
 fun App(
@@ -49,12 +53,27 @@ fun App(
     deepLinkRequestId: Int = 0,
     windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass,
 ) {
+    var savedSnapshot by rememberSaveable(stateSaver = studySnapshotSaver) { mutableStateOf(StudySnapshot.initial()) }
+    val dependencyModule =
+        remember {
+            appModule(savedSnapshot) { snapshot -> savedSnapshot = snapshot }
+        }
+    KoinApplication(application = { modules(dependencyModule) }) {
+        AppContent(deepLink, deepLinkRequestId, windowSizeClass)
+    }
+}
+
+@Composable
+private fun AppContent(
+    deepLink: String?,
+    deepLinkRequestId: Int,
+    windowSizeClass: WindowSizeClass,
+) {
     val controller = rememberNavController()
-    val session = rememberSaveable(saver = studySessionSaver) { StudySession() }
     var themeName by rememberSaveable { mutableStateOf(ThemeMode.System.name) }
     RevysaTheme(ThemeMode.valueOf(themeName)) {
         AppLayout(controller, windowSizeClass) {
-            AppGraph(controller, session, ThemeMode.valueOf(themeName), deepLink, deepLinkRequestId) { themeName = it.name }
+            AppGraph(controller, ThemeMode.valueOf(themeName), deepLink, deepLinkRequestId) { themeName = it.name }
         }
     }
 }
@@ -147,7 +166,6 @@ private fun AppNavigation(
 @Composable
 private fun AppGraph(
     controller: NavHostController,
-    session: StudySession,
     theme: ThemeMode,
     deepLink: String?,
     deepLinkRequestId: Int,
@@ -156,24 +174,30 @@ private fun AppGraph(
     var handledUri by rememberSaveable { mutableStateOf<String?>(null) }
     var handledRequest by rememberSaveable { mutableStateOf(-1) }
     NavHost(controller, startDestination = Home) {
-        composable<Home> { HomeRoute(session, controller::navigateTo) }
+        composable<Home> { HomeRoute(controller::navigateTo) }
         navigation<LibraryGraph>(startDestination = Library) {
-            composable<Library> { LibraryRoute(session, controller::navigateTo) }
-            composable<Subjects> { SubjectsScreen(catalog) { controller.navigate(Material(it)) } }
+            composable<Library> { LibraryRoute(controller::navigateTo) }
+            composable<Subjects> {
+                val viewModel = org.koin.compose.viewmodel.koinViewModel<StudyViewModel>()
+                val state by viewModel.state.collectAsState()
+                StudyStateContent(state, viewModel::retry) {
+                    SubjectsScreen(viewModel.materials()) { controller.navigate(Material(it)) }
+                }
+            }
             composable<Material>(deepLinks = listOf(navDeepLink<Material>(basePath = "revysa://material"))) { entry ->
-                MaterialRoute(entry.toRoute<Material>().id, session, controller::navigateTo)
+                MaterialRoute(entry.toRoute<Material>().id, controller::navigateTo)
             }
             composable<Reader> { entry ->
-                ReaderRoute(entry.toRoute(), session, controller::navigateTo)
+                ReaderRoute(entry.toRoute(), controller::navigateTo)
             }
-            composable<Notes> { entry -> NotesRoute(entry.toRoute(), session) }
+            composable<Notes> { entry -> NotesRoute(entry.toRoute()) }
             composable<CreateCard> { entry ->
-                CreateCardRoute(entry.toRoute(), session) { controller.popBackStack() }
+                CreateCardRoute(entry.toRoute()) { controller.popBackStack() }
             }
-            composable<Quiz> { entry -> QuizRoute(entry.toRoute<Quiz>().id, session) }
+            composable<Quiz> { entry -> QuizRoute(entry.toRoute<Quiz>().id) }
         }
-        composable<Review> { ReviewRoute(session) }
-        composable<Progress> { ProgressRoute(session, controller::navigateTo) }
+        composable<Review> { ReviewRoute() }
+        composable<Progress> { ProgressRoute(controller::navigateTo) }
         composable<Profile> {
             ProfileScreen(theme, onTheme, onLogin = { controller.navigate(Login) }, onRegister = { controller.navigate(Register) })
         }
