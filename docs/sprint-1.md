@@ -10,6 +10,8 @@ Perfil oferece os temas sistema/claro/escuro e acesso às superfícies de login/
 
 ## Organização
 
+Esta seção registra a organização no fechamento da Sprint 1. Na retomada da Sprint 2, o estado e o catálogo demonstrativos foram movidos para `data/demo`, os modelos e contratos para `domain`, e a apresentação para ViewModel e rotas conectadas por Koin. A estrutura atual está em [arquitetura](arquitetura.md).
+
 - `App.kt`, `Routes.kt` e `*RouteAdapters.kt`: Navigation Compose com rotas tipadas serializadas, grafo da biblioteca, retorno e adaptação da navegação.
 - `LibraryScreens.kt`, `ReaderScreens.kt`, `ReviewScreens.kt`, `ProfileScreens.kt`: componentes visuais sem acesso a sessão, catálogo global ou navegação; recebem dados e callbacks.
 - `ScreenStates.kt` e `*Previews.kt`: estados de apresentação e previews fixos das 13 superfícies, incluindo vazios e erros.
