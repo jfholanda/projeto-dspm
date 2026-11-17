@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 internal fun ReviewScreen(
     state: ReviewUiState,
     onReveal: () -> Unit,
-    onRate: () -> Unit,
+    onRate: (ReviewRating) -> Unit,
     onRestart: () -> Unit,
 ) {
     val card = state.card
@@ -47,8 +47,15 @@ internal fun ReviewScreen(
                 item {
                     Text(card.answer, modifier = Modifier.testTag("review-answer").semantics { liveRegion = LiveRegionMode.Polite })
                 }
-                items(listOf("Errei", "Difícil", "Acertei", "Fácil")) { rating ->
-                    Action(rating, "rating-$rating", onClick = onRate)
+                items(
+                    listOf(
+                        "Errei" to ReviewRating.AGAIN,
+                        "Difícil" to ReviewRating.HARD,
+                        "Acertei" to ReviewRating.GOOD,
+                        "Fácil" to ReviewRating.EASY,
+                    ),
+                ) { (label, rating) ->
+                    Action(label, "rating-$label", onClick = { onRate(rating) })
                 }
             } else {
                 item { Action("Revelar resposta", "reveal", onClick = onReveal) }
