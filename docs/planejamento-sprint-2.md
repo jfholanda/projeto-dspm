@@ -4,6 +4,18 @@
 
 **Objetivo:** retirar estado e regras de negócio das funções de tela, preparando o Revysa para persistência e rede na Sprint 3.
 
+## Retomada em 19/11/2026
+
+As entregas de domínio, casos de uso, ViewModels, Koin, testes, documentação de arquitetura e Home foram integradas à `main` pelos PRs #37, #38, #40, #41, #42 e #44. O CI do PR #44 passou em `ktlintCheck`, Detekt, `allTests`, `assembleDebug` e `desktopJar`.
+
+O workspace não possui plataformas Android no SDK, então os testes/builds não puderam ser executados localmente. O CI do GitHub validou os alvos Android e Desktop; a passagem manual do fluxo Android e o vídeo de cinco minutos continuam pendentes, mantendo aberta a Issue #27.
+
+## Rastreamento no GitHub
+
+- Issues: [S2-01 #21](https://github.com/jfholanda/projeto-dspm/issues/21), [S2-02 #22](https://github.com/jfholanda/projeto-dspm/issues/22), [S2-03 #23](https://github.com/jfholanda/projeto-dspm/issues/23), [S2-04 #24](https://github.com/jfholanda/projeto-dspm/issues/24), [S2-05 #25](https://github.com/jfholanda/projeto-dspm/issues/25), [S2-06 #26](https://github.com/jfholanda/projeto-dspm/issues/26), [S2-07 #27](https://github.com/jfholanda/projeto-dspm/issues/27), [S2-08 #35](https://github.com/jfholanda/projeto-dspm/issues/35).
+- PRs integrados: [#37](https://github.com/jfholanda/projeto-dspm/pull/37), [#38](https://github.com/jfholanda/projeto-dspm/pull/38), [#40](https://github.com/jfholanda/projeto-dspm/pull/40), [#41](https://github.com/jfholanda/projeto-dspm/pull/41), [#42](https://github.com/jfholanda/projeto-dspm/pull/42) e [#44](https://github.com/jfholanda/projeto-dspm/pull/44).
+- A Issue #27 permanece aberta para a validação manual no Android e a inclusão do vídeo de cinco minutos no README.
+
 ## Escopo
 
 - Separar `data`, `domain` e `presentation` em `commonMain`.
@@ -29,13 +41,13 @@
 
 ## Critérios de aceite da disciplina
 
-- [ ] ViewModel multiplataforma expondo `StateFlow` e com escopo adequado.
-- [ ] `data/domain/presentation` separados; domínio independente de UI/infraestrutura; repositórios definidos por interface no domínio.
-- [ ] `Loading`, `Error`, `Empty` e `Success` modelados explicitamente por tipo selado e refletidos na UI.
-- [ ] Koin configurado em `commonMain`.
-- [ ] ≥8 testes de ViewModel com Turbine e dublês injetados, verdes no CI.
-- [ ] `docs/arquitetura.md` com diagrama e justificativas.
-- [ ] Home apresenta a próxima ação com base nas revisões vencidas e na leitura pendente; testes cobrem vencimentos, ordenação, conclusão e fallback.
+- [x] ViewModel multiplataforma expondo `StateFlow` e com escopo adequado.
+- [x] `data/domain/presentation` separados; domínio independente de UI/infraestrutura; repositórios definidos por interface no domínio.
+- [x] `Loading`, `Error`, `Empty` e `Success` modelados explicitamente por tipo selado e refletidos na UI.
+- [x] Koin configurado em `commonMain`.
+- [x] ≥8 testes de ViewModel com Turbine e dublês injetados, verdes no CI.
+- [x] `docs/arquitetura.md` com diagrama e justificativas.
+- [x] Home apresenta a próxima ação com base nas revisões vencidas e na leitura pendente; testes cobrem vencimentos, ordenação, conclusão e fallback.
 - [ ] Vídeo de cinco minutos, PRs/issues rastreáveis e CI verde.
 
 ## Rastreamento S2-08
