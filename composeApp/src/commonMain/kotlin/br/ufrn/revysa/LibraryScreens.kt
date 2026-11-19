@@ -19,6 +19,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import br.ufrn.revysa.domain.model.HomePrimaryAction
+import br.ufrn.revysa.domain.model.StudyReadingSuggestion
 
 @Composable
 internal fun HomeScreen(
@@ -26,11 +28,43 @@ internal fun HomeScreen(
     onReview: () -> Unit,
     onLibrary: () -> Unit,
     onSubjects: () -> Unit,
+    onExplore: () -> Unit,
+    onContinueReading: (StudyReadingSuggestion) -> Unit,
     onMaterial: (String) -> Unit,
 ) {
     Screen("Seu próximo passo de estudo") {
         item { Text("Leia, registre ideias e revise o que aprendeu.") }
-        item { Action("Começar revisão", "start-review", onClick = onReview) }
+        when (state.summary.primaryAction) {
+            HomePrimaryAction.REVIEW ->
+                item {
+                    val count = state.summary.dueReviewCount
+                    val label = if (count == 1) "Revisar 1 cartão" else "Revisar $count cartões"
+                    Action(label, "start-review", onClick = onReview)
+                }
+            HomePrimaryAction.CONTINUE_READING ->
+                state.summary.nextReading?.let { suggestion ->
+                    item {
+                        Action(
+                            "Continuar: ${suggestion.chapterTitle}",
+                            "continue-reading",
+                            onClick = { onContinueReading(suggestion) },
+                        )
+                    }
+                }
+            HomePrimaryAction.EXPLORE_CATALOG -> item { Action("Explorar catálogo", "explore-catalog", onClick = onExplore) }
+        }
+        if (state.summary.primaryAction == HomePrimaryAction.REVIEW) {
+            state.summary.nextReading?.let { suggestion ->
+                item { Text("Continue sua leitura", style = MaterialTheme.typography.titleLarge) }
+                item {
+                    Action(
+                        "${suggestion.materialTitle}: ${suggestion.chapterTitle}",
+                        "continue-reading",
+                        onClick = { onContinueReading(suggestion) },
+                    )
+                }
+            }
+        }
         item { Action("Abrir biblioteca", "open-library", onClick = onLibrary) }
         item { Action("Ver disciplinas", "open-subjects", onClick = onSubjects) }
         item { Text("Continue estudando", style = MaterialTheme.typography.titleLarge) }

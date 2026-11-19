@@ -3,6 +3,7 @@ package br.ufrn.revysa.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.ufrn.revysa.domain.model.ReviewRating
+import br.ufrn.revysa.domain.model.StudyHomeSummary
 import br.ufrn.revysa.domain.model.StudySnapshot
 import br.ufrn.revysa.domain.usecase.StudyUseCases
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -94,6 +95,8 @@ internal class StudyViewModel(private val useCases: StudyUseCases) : ViewModel()
     ) = useCases.submitQuiz(materialId, selectedAnswer)
 
     fun dueCards() = useCases.reviewDueCards()
+
+    fun homeSummary(snapshot: StudySnapshot): StudyHomeSummary = useCases.homeSummary(snapshot)
 
     fun recordReview(
         cardId: String,

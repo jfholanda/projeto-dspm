@@ -53,4 +53,20 @@ internal data class StudySnapshot(
     }
 }
 
+internal enum class HomePrimaryAction { REVIEW, CONTINUE_READING, EXPLORE_CATALOG }
+
+internal data class StudyReadingSuggestion(
+    val materialId: String,
+    val chapterIndex: Int,
+    val materialTitle: String,
+    val chapterTitle: String,
+    val progress: Float,
+)
+
+internal data class StudyHomeSummary(
+    val dueReviewCount: Int,
+    val nextReading: StudyReadingSuggestion?,
+    val primaryAction: HomePrimaryAction,
+)
+
 internal enum class ReviewRating { AGAIN, HARD, GOOD, EASY }
