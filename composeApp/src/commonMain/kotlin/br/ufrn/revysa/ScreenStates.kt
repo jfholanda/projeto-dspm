@@ -2,7 +2,11 @@ package br.ufrn.revysa
 
 internal data class MaterialItem(val material: StudyMaterial, val progress: Float)
 
-internal data class HomeUiState(val materials: List<MaterialItem>, val reviewed: Int)
+internal data class HomeUiState(
+    val materials: List<MaterialItem>,
+    val reviewed: Int,
+    val summary: br.ufrn.revysa.domain.model.StudyHomeSummary,
+)
 
 internal data class LibraryUiState(val query: String, val explore: Boolean, val materials: List<MaterialItem>)
 

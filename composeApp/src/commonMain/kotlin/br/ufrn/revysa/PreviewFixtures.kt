@@ -2,6 +2,9 @@ package br.ufrn.revysa
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import br.ufrn.revysa.domain.model.HomePrimaryAction
+import br.ufrn.revysa.domain.model.StudyHomeSummary
+import br.ufrn.revysa.domain.model.StudyReadingSuggestion
 
 internal object PreviewFixtures {
     val chapter =
@@ -22,6 +25,12 @@ internal object PreviewFixtures {
         )
     val item = MaterialItem(material, 0.5f)
     val card = StudyCard(material.id, 0, "Como a busca reduz o intervalo?", chapter.keyIdea)
+    val homeSummary =
+        StudyHomeSummary(
+            2,
+            StudyReadingSuggestion(material.id, 0, material.title, chapter.title, 0.5f),
+            HomePrimaryAction.REVIEW,
+        )
 }
 
 @Composable
