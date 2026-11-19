@@ -14,7 +14,8 @@ internal fun HomePreview() {
 @Preview(name = "HomeEmptyPreview", widthDp = 390, heightDp = 740)
 @Composable
 internal fun HomeEmptyPreview() {
-    PreviewFrame { HomeScreen(HomeUiState(emptyList(), 0, StudyHomeSummary(0, null, HomePrimaryAction.EXPLORE_CATALOG)), {}, {}, {}, {}, {}, {}) }
+    val state = HomeUiState(emptyList(), 0, StudyHomeSummary(0, null, HomePrimaryAction.EXPLORE_CATALOG))
+    PreviewFrame { HomeScreen(state, {}, {}, {}, {}, {}, {}) }
 }
 
 @Preview(name = "LibraryPreview", widthDp = 390, heightDp = 740)
