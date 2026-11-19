@@ -14,6 +14,10 @@ A navegação usa Navigation Compose com rotas tipadas, argumentos, grafo aninha
 
 Os dados são demonstrativos, com textos próprios, e ficam em memória durante a sessão. Login/cadastro validam a interface sem criar contas. Backend, autenticação real, persistência e sincronização pertencem às etapas posteriores.
 
+## Sprint 2 — arquitetura e estado
+
+Os fluxos compartilhados usam camadas `domain`, `data` e `presentation` em pacotes de `commonMain`. O domínio declara entidades, repositório e casos de uso; o adaptador demonstrativo mantém dados em memória; ViewModels publicam estados selados por `StateFlow` e são injetados por Koin. A revisão registra intervalo e próxima data conforme a avaliação do cartão. Consulte [docs/arquitetura.md](docs/arquitetura.md).
+
 **Prazo:** 20/10/2026, conforme prorrogação no SIGAA informada pelo responsável. **Código integrado:** [PR #19](https://github.com/jfholanda/projeto-dspm/pull/19), [CI verde na main](https://github.com/jfholanda/projeto-dspm/actions/runs/39466669530). **Aceite final pendente:** passagem humana Android/TalkBack, previews no Android Studio, vídeo enviado ao professor e quadro Projects. As evidências e limitações ficam em [docs/sprint-1.md](docs/sprint-1.md) e na [passagem Android](docs/evidencias-android-sprint-1.md).
 
 ## Executar
@@ -89,8 +93,8 @@ A implementação inclui rótulos, papéis, estados selecionados, áreas mínima
 ## Estrutura
 
 ```text
-composeApp/src/commonMain/   telas, navegação, componentes, tema e estado da sessão
-composeApp/src/commonTest/   testes comuns de contraste
+composeApp/src/commonMain/   telas, navegação, apresentação, domínio e dados demonstrativos
+composeApp/src/commonTest/   testes de ViewModel, regras de domínio e contraste
 composeApp/src/desktopTest/  testes de interface compartilhada
 composeApp/src/androidMain/  Activity, manifest e barras de sistema
 composeApp/src/desktopMain/  janela e entrada Desktop
