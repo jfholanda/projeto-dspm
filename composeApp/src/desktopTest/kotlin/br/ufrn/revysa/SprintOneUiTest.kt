@@ -89,6 +89,7 @@ class SprintOneUiTest {
     fun homeReviewActionOpensDueQueue() {
         launch()
         click("start-review")
+        compose.onNodeWithTag("screen").performScrollToNode(hasTestTag("review-question"))
         compose.onNodeWithTag("review-question").assertTextContains("taxa de aprendizado")
     }
 
